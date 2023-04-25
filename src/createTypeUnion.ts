@@ -5,7 +5,7 @@ type TypeUnionVisitor<
     ReturnValue,
     TypeKey extends string = "type",
 > = {
-    [Type in TypeUnion[TypeKey]]: (value: ValueForTypeKey<TypeUnion, TypeKey, Type>) => ReturnValue;
+    [Type in TypeUnion[TypeKey]]: (value: ValueForTypeKey<TypeUnion, Type, TypeKey>) => ReturnValue;
 };
 
 export function visitTypeUnion<
@@ -33,7 +33,7 @@ function createPackType<
 >(
     type: Type,
     typeKey: TypeKey = "type" as never,
-): (value: ValueForTypeKey<TypeUnion, TypeKey, Type>) => RestrictedTypeUnionForTypeKey<TypeUnion, TypeKey, Type> {
+): (value: ValueForTypeKey<TypeUnion, Type, TypeKey>) => RestrictedTypeUnionForTypeKey<TypeUnion, Type, TypeKey> {
     return ((value: unknown) => ({ [typeKey]: type, [type]: value })) as never;
 }
 
@@ -44,8 +44,8 @@ function createIsType<
 >(
     type: Type,
     typeKey: TypeKey = "type" as never,
-): (value: TypeUnion) => value is RestrictedTypeUnionForTypeKey<TypeUnion, TypeKey, Type> {
-    return (value): value is RestrictedTypeUnionForTypeKey<TypeUnion, TypeKey, Type> => value[typeKey] === type;
+): (value: TypeUnion) => value is RestrictedTypeUnionForTypeKey<TypeUnion, Type, TypeKey> {
+    return (value): value is RestrictedTypeUnionForTypeKey<TypeUnion, Type, TypeKey> => value[typeKey] === type;
 }
 
 function createVisitTypeUnion<
@@ -62,12 +62,12 @@ type ITypeUnionUtils<
     TypeKey extends string = "type",
 > = {
     [Type in TypeUnion[TypeKey]]: (
-        value: ValueForTypeKey<TypeUnion, TypeKey, Type>,
-    ) => RestrictedTypeUnionForTypeKey<TypeUnion, TypeKey, Type>;
+        value: ValueForTypeKey<TypeUnion, Type, TypeKey>,
+    ) => RestrictedTypeUnionForTypeKey<TypeUnion, Type, TypeKey>;
 } & {
     [Type in TypeUnion[TypeKey] as `is${Capitalize<Type>}`]: (
         value: TypeUnion,
-    ) => value is RestrictedTypeUnionForTypeKey<TypeUnion, TypeKey, Type>;
+    ) => value is RestrictedTypeUnionForTypeKey<TypeUnion, Type, TypeKey>;
 } & {
     visit<ReturnValue>(value: TypeUnion, visitor: TypeUnionVisitor<TypeUnion, ReturnValue, TypeKey>): ReturnValue;
 };
