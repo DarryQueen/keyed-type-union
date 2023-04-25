@@ -2,7 +2,7 @@ name: frontend
 on: push
 jobs:
   cache-yarn:
-    runs-on: buildjet-4vcpu-ubuntu-2204
+    runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
       - name: Checkout
@@ -15,7 +15,7 @@ jobs:
 
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path
-        run: echo "dir=$(yarn cache dir)" >> $GITHUB_OUTPUT
+        run: echo "::set-output name=dir::$(yarn cache dir)"
 
       - name: Cache yarn dependencies
         uses: actions/cache@v3
@@ -37,7 +37,7 @@ jobs:
 
   build-and-test:
     needs: cache-yarn
-    runs-on: buildjet-4vcpu-ubuntu-2204
+    runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
       - name: Checkout
@@ -50,7 +50,7 @@ jobs:
 
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path
-        run: echo "dir=$(yarn cache dir)" >> $GITHUB_OUTPUT
+        run: echo "::set-output name=dir::$(yarn cache dir)"
 
       - name: Cache yarn dependencies
         uses: actions/cache@v3
@@ -72,7 +72,7 @@ jobs:
 
   lint:
     needs: cache-yarn
-    runs-on: buildjet-4vcpu-ubuntu-2204
+    runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
       - name: Checkout
@@ -85,7 +85,7 @@ jobs:
 
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path
-        run: echo "dir=$(yarn cache dir)" >> $GITHUB_OUTPUT
+        run: echo "::set-output name=dir::$(yarn cache dir)"
 
       - name: Cache yarn dependencies
         uses: actions/cache@v3
