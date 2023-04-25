@@ -1,0 +1,21 @@
+# MacOS:
+.DS_Store
+Thumbs.db
+
+# NPM:
+node_modules/
+npm-debug.log
+yarn-error.log
+.npmrc
+
+# Application:
+lib
+dist
+
+# VSCode:
+.vscode/
+
+# Testing:
+coverage
+test-report.xml
+.jest-cache
