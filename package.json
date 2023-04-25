@@ -1,6 +1,6 @@
 {
   "name": "keyed-type-union",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "private": false,
   "description": "A type-safe wrapper and utils around explicit union types.",
   "main": "lib/index.js",
