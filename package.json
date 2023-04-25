@@ -5,6 +5,7 @@
   "description": "A type-safe wrapper and utils around explicit union types.",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
+  "files": ["/lib"],
   "scripts": {
     "compile": "tsc -p ./src",
     "lint": "eslint ./src",
