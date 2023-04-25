@@ -1,0 +1,24 @@
+{
+  "name": "keyed-type-union",
+  "version": "0.0.1",
+  "private": false,
+  "description": "A type-safe wrapper and utils around explicit union types.",
+  "main": "src/index.ts",
+  "scripts": {
+    "build": "",
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix .",
+    "test": "jest",
+    "tsc-check": "tsc -p ./src"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@types/jest": "^29.5.0",
+    "jest": "^29.4.2",
+    "typescript": "^4.9.5"
+  },
+  "repository": "https://github.com/DarryQueen/keyed-type-union",
+  "keywords": [],
+  "author": "darryqueen",
+  "license": "ISC"
+}
