@@ -6,6 +6,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## Unreleased
 
+### Changed
+- Third generic argument `TypeKey` is now optional and defaults to `"type"`.
+
 ## 0.0.3 - 2023-04-25
 ### Added
 - Changelog
