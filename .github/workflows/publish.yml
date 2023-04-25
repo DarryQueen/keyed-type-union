@@ -7,7 +7,7 @@ on:
         description: 'Release type (one of): patch, minor, major, prepatch, preminor, premajor, prerelease'
         required: true
 jobs:
-  build:
+  publish:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -16,6 +16,7 @@ jobs:
       - name: Setup NodeJS 16
         uses: actions/setup-node@v3
         with:
+          registry-url: https://registry.npmjs.org/
           node-version: 16
 
       - name: Install dependencies and build
