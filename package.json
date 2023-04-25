@@ -3,13 +3,13 @@
   "version": "0.0.1",
   "private": false,
   "description": "A type-safe wrapper and utils around explicit union types.",
-  "main": "src/index.ts",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
   "scripts": {
-    "build": "",
+    "compile": "tsc -p ./src",
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
-    "test": "jest",
-    "tsc-check": "tsc -p ./src"
+    "test": "jest"
   },
   "dependencies": {},
   "devDependencies": {
