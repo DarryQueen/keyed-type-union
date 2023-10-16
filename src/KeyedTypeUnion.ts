@@ -1,4 +1,4 @@
-import { Key } from "./key";
+import { Key } from "./Key";
 
 export type KeyedTypeUnion<KeyedValues extends Record<Type, unknown>, TypeKey extends string = "type"> = {
     [Type in keyof KeyedValues]: { [K in TypeKey]: Type } & {
