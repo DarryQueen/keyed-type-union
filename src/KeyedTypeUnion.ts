@@ -1,4 +1,5 @@
-export type KeyedTypeUnion<KeyedValues extends Record<string, unknown>, TypeKey extends string = "type"> = {
+type Type = keyof any;
+export type KeyedTypeUnion<KeyedValues extends Record<Type, unknown>, TypeKey extends string = "type"> = {
     [Type in keyof KeyedValues]: { [K in TypeKey]: Type } & {
         [T in Type]: KeyedValues[Type];
     };
