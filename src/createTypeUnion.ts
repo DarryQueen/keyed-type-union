@@ -1,7 +1,8 @@
+import { Key } from "./Key";
 import { KeyedTypeUnion, RestrictedTypeUnionForTypeKey, ValueForTypeKey } from "./KeyedTypeUnion";
 
 type TypeUnionVisitor<
-    TypeUnion extends KeyedTypeUnion<Record<string, unknown>, TypeKey>,
+    TypeUnion extends KeyedTypeUnion<Record<Key, unknown>, TypeKey>,
     ReturnValue,
     TypeKey extends string = "type",
 > = {
@@ -9,7 +10,7 @@ type TypeUnionVisitor<
 };
 
 export function visitTypeUnion<
-    TypeUnion extends KeyedTypeUnion<Record<string, unknown>, TypeKey>,
+    TypeUnion extends KeyedTypeUnion<Record<Key, unknown>, TypeKey>,
     ReturnValue,
     TypeKey extends string = "type",
 >(
@@ -27,7 +28,7 @@ export function visitTypeUnion<
 }
 
 function createPackType<
-    TypeUnion extends KeyedTypeUnion<Record<string, unknown>, TypeKey>,
+    TypeUnion extends KeyedTypeUnion<Record<Key, unknown>, TypeKey>,
     Type extends TypeUnion[TypeKey],
     TypeKey extends string = "type",
 >(
@@ -38,7 +39,7 @@ function createPackType<
 }
 
 function createIsType<
-    TypeUnion extends KeyedTypeUnion<Record<string, unknown>, TypeKey>,
+    TypeUnion extends KeyedTypeUnion<Record<Key, unknown>, TypeKey>,
     Type extends TypeUnion[TypeKey],
     TypeKey extends string = "type",
 >(
@@ -49,7 +50,7 @@ function createIsType<
 }
 
 function createVisitTypeUnion<
-    TypeUnion extends KeyedTypeUnion<Record<string, unknown>, TypeKey>,
+    TypeUnion extends KeyedTypeUnion<Record<Key, unknown>, TypeKey>,
     TypeKey extends string = "type",
 >(
     typeKey: TypeKey = "type" as never,
@@ -58,7 +59,7 @@ function createVisitTypeUnion<
 }
 
 type ITypeUnionUtils<
-    TypeUnion extends KeyedTypeUnion<Record<string, unknown>, TypeKey>,
+    TypeUnion extends KeyedTypeUnion<Record<Key, unknown>, TypeKey>,
     TypeKey extends string = "type",
 > = {
     [Type in TypeUnion[TypeKey]]: (
@@ -79,7 +80,7 @@ type ITypeUnionUtils<
  *   * Visitor.
  */
 export function createTypeUnion<
-    TypeUnion extends KeyedTypeUnion<Record<string, unknown>, TypeKey>,
+    TypeUnion extends KeyedTypeUnion<Record<Key, unknown>, TypeKey>,
     TypeKey extends string = "type",
 >(
     types: Record<TypeUnion[TypeKey], undefined>,
