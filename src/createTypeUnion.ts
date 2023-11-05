@@ -3,15 +3,24 @@ import { KeyedTypeUnion, RestrictedTypeUnionForTypeKey, ValueForTypeKey } from "
 type TypeUnionVisitor<
     TypeUnion extends KeyedTypeUnion<Record<string, unknown>, TypeKey>,
     ReturnValue,
-    TypeKey extends string = "type",
+    TypeKey extends string,
 > = {
     [Type in TypeUnion[TypeKey]]: (value: ValueForTypeKey<TypeUnion, Type, TypeKey>) => ReturnValue;
 };
 
+export function visitTypeUnion<TypeUnion extends KeyedTypeUnion<Record<string, unknown>, "type">, ReturnValue>(
+    value: TypeUnion,
+    visitor: TypeUnionVisitor<TypeUnion, ReturnValue, "type">,
+): ReturnValue;
 export function visitTypeUnion<
     TypeUnion extends KeyedTypeUnion<Record<string, unknown>, TypeKey>,
     ReturnValue,
-    TypeKey extends string = "type",
+    TypeKey extends string,
+>(value: TypeUnion, visitor: TypeUnionVisitor<TypeUnion, ReturnValue, TypeKey>, typeKey: TypeKey): ReturnValue;
+export function visitTypeUnion<
+    TypeUnion extends KeyedTypeUnion<Record<string, unknown>, TypeKey>,
+    ReturnValue,
+    TypeKey extends string,
 >(
     value: TypeUnion,
     visitor: TypeUnionVisitor<TypeUnion, ReturnValue, TypeKey>,
@@ -29,10 +38,10 @@ export function visitTypeUnion<
 function createPackType<
     TypeUnion extends KeyedTypeUnion<Record<string, unknown>, TypeKey>,
     Type extends TypeUnion[TypeKey],
-    TypeKey extends string = "type",
+    TypeKey extends string,
 >(
     type: Type,
-    typeKey: TypeKey = "type" as never,
+    typeKey: TypeKey,
 ): (value: ValueForTypeKey<TypeUnion, Type, TypeKey>) => RestrictedTypeUnionForTypeKey<TypeUnion, Type, TypeKey> {
     return ((value: unknown) => ({ [typeKey]: type, [type]: value })) as never;
 }
@@ -40,27 +49,24 @@ function createPackType<
 function createIsType<
     TypeUnion extends KeyedTypeUnion<Record<string, unknown>, TypeKey>,
     Type extends TypeUnion[TypeKey],
-    TypeKey extends string = "type",
+    TypeKey extends string,
 >(
     type: Type,
-    typeKey: TypeKey = "type" as never,
+    typeKey: TypeKey,
 ): (value: TypeUnion) => value is RestrictedTypeUnionForTypeKey<TypeUnion, Type, TypeKey> {
     return (value): value is RestrictedTypeUnionForTypeKey<TypeUnion, Type, TypeKey> => value[typeKey] === type;
 }
 
 function createVisitTypeUnion<
     TypeUnion extends KeyedTypeUnion<Record<string, unknown>, TypeKey>,
-    TypeKey extends string = "type",
+    TypeKey extends string,
 >(
-    typeKey: TypeKey = "type" as never,
+    typeKey: TypeKey,
 ): <ReturnValue>(value: TypeUnion, visitor: TypeUnionVisitor<TypeUnion, ReturnValue, TypeKey>) => ReturnValue {
     return (value, visitor) => visitTypeUnion(value, visitor, typeKey);
 }
 
-type ITypeUnionUtils<
-    TypeUnion extends KeyedTypeUnion<Record<string, unknown>, TypeKey>,
-    TypeKey extends string = "type",
-> = {
+type ITypeUnionUtils<TypeUnion extends KeyedTypeUnion<Record<string, unknown>, TypeKey>, TypeKey extends string> = {
     [Type in TypeUnion[TypeKey]]: (
         value: ValueForTypeKey<TypeUnion, Type, TypeKey>,
     ) => RestrictedTypeUnionForTypeKey<TypeUnion, Type, TypeKey>;
@@ -78,9 +84,16 @@ type ITypeUnionUtils<
  *   * Is type (create a type-checker on the union type).
  *   * Visitor.
  */
+export function createTypeUnion<TypeUnion extends KeyedTypeUnion<Record<string, unknown>, "type">>(
+    types: Record<TypeUnion["type"], undefined>,
+): ITypeUnionUtils<TypeUnion, "type">;
 export function createTypeUnion<
     TypeUnion extends KeyedTypeUnion<Record<string, unknown>, TypeKey>,
-    TypeKey extends string = "type",
+    TypeKey extends string,
+>(types: Record<TypeUnion[TypeKey], undefined>, typeKey: TypeKey): ITypeUnionUtils<TypeUnion, TypeKey>;
+export function createTypeUnion<
+    TypeUnion extends KeyedTypeUnion<Record<string, unknown>, TypeKey>,
+    TypeKey extends string,
 >(
     types: Record<TypeUnion[TypeKey], undefined>,
     typeKey: TypeKey = "type" as never,
